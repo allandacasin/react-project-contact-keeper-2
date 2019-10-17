@@ -11,6 +11,7 @@ import Alert from './components/layout/Alert';
 import Login from './components/auth/Login';
 import setAuthToken from './utils/setAuthToken';
 import { getLoggedinUser, noToken } from './actions/auth';
+import Contact from './components/contacts/Contact';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token)
@@ -39,6 +40,7 @@ const App = () => {
               <Switch>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/' component={Contact} />
               </Switch>
             </section>
         </Fragment>

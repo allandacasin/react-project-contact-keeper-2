@@ -17,6 +17,8 @@ export const getLoggedinUser = () => async dispatch => {
     
     const res = await axios.get('api/auth');
 
+    // console.log(res.data);
+
     dispatch({type: GET_LOGGEDIN_USER, payload: res.data});
 
   } catch (err) {
