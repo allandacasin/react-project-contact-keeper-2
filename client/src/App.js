@@ -4,7 +4,6 @@ import {Provider} from 'react-redux';
 import store from './store';
 import './App.css';
 
-
 import Navbar from './components/layout/Navbar'
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
@@ -12,6 +11,7 @@ import Login from './components/auth/Login';
 import setAuthToken from './utils/setAuthToken';
 import { getLoggedinUser, noToken } from './actions/auth';
 import Contact from './components/contacts/Contact';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token)
@@ -40,7 +40,7 @@ const App = () => {
               <Switch>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
-                <Route exact path='/' component={Contact} />
+                <PrivateRoute exact path='/' component={Contact} />
               </Switch>
             </section>
         </Fragment>

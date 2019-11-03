@@ -2,8 +2,9 @@ import React, {Fragment} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
+import {logout} from '../../actions/auth'
 
-const Navbar = ({auth: {isAuthenticated, loading, user }}) => {
+const Navbar = ({auth: {isAuthenticated, loading, user }, logout}) => {
 
   const guestLinks = (
 
@@ -19,8 +20,8 @@ const Navbar = ({auth: {isAuthenticated, loading, user }}) => {
     <ul className="navbar-nav">
       <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>  
       <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>  
-      <li className="nav-item"><span className="nav-link">{!loading && `Hello ${user.name}!`}</span></li>
-      <li className="nav-item"><a href="#!" className="nav-link"><i className='fas fa-sign-out-alt' />{' '}
+      <li className="nav-item"><span className="nav-link">{user && `Hello ${user.name}!`}</span></li>
+      <li className="nav-item"><a onClick={logout} href="#!" className="nav-link"><i className='fas fa-sign-out-alt' />{' '}
           <span className='hide-sm'>Logout</span></a></li>
     </ul>
   )
@@ -40,6 +41,7 @@ const Navbar = ({auth: {isAuthenticated, loading, user }}) => {
 Navbar.propTypes = {
 
   auth: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
 
 }
 
@@ -49,4 +51,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps)(Navbar)
+export default connect(mapStateToProps, {logout})(Navbar)

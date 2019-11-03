@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {setAlert} from './alert'
-import { ADD_CONTACT, CONTACT_ERROR } from './types'
+import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS } from './types'
 
 
 export const addContact = ({name, email, phone, type}) => async dispatch => {
@@ -34,5 +34,21 @@ export const addContact = ({name, email, phone, type}) => async dispatch => {
 
   }
 
+
+}
+
+export const getContacts = () => async dispatch => {
+
+  try {
+
+    const res = await axios.get('/api/contacts');
+    //console.log(res.data);
+    dispatch({type: GET_CONTACTS, payload: res.data });
+
+  } catch (err) {
+    
+    dispatch({type: CONTACT_ERROR, payload: {msg: err.response.statusText, status: err.response.status}});
+
+  }
 
 }

@@ -39,7 +39,7 @@ const Login = ({setAlert, login, isAuthenticated}) => {
   return (
     <Fragment>
       <div className="form-container">
-        <h1>Account <span className="text-primary">Register</span></h1>
+        <h1>Account <span className="text-primary">Login</span></h1>
       
         <form onSubmit={e => onSubmit(e)}>
 

@@ -1,10 +1,18 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import ContactItem from './ContactItem'
 import ContactFilter from './ContactFilter'
 import ContactForm from './ContactForm'
+import {getContacts} from '../../actions/contact'
+import Spinner from '../layout/Spinner'
 
-const Contact = props => {
+const Contact = ({contact: {contacts, loading}, getContacts}) => {
+
+  useEffect(() => {
+    getContacts();
+  }, [getContacts])
+
   return (
     <Fragment>
       <div className="grid-2">
@@ -18,8 +26,15 @@ const Contact = props => {
           <ContactFilter />
           
           {/* ContactItem Component */}
-          <ContactItem />
-
+          <Fragment>
+            {loading ? (<Spinner />) : (
+              <Fragment>
+                {contacts.map(contact => (
+                  <ContactItem key={contact._id} contact={contact} />
+                ))}
+              </Fragment>
+            )}
+          </Fragment>
         </div>
 
 
@@ -30,6 +45,13 @@ const Contact = props => {
 
 Contact.propTypes = {
 
+  getContacts: PropTypes.func.isRequired,
+  contact: PropTypes.object.isRequired,
+
 }
 
-export default Contact
+const mapStateToProps = state => ({
+  contact: state.contact
+})
+
+export default connect(mapStateToProps, {getContacts})(Contact)

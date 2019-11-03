@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, GET_LOGGEDIN_USER, AUTH_ERROR, NO_TOKEN } from './types'
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_FAIL, LOGIN_SUCCESS, GET_LOGGEDIN_USER, AUTH_ERROR, NO_TOKEN, LOG_OUT, CLEAR_CONTACTS } from './types'
 import {setAlert} from './alert'
 import setAuthToken from '../utils/setAuthToken'
 
@@ -15,9 +15,9 @@ export const getLoggedinUser = () => async dispatch => {
 
   try {
     
-    const res = await axios.get('api/auth');
+    const res = await axios.get('/api/auth');
 
-    // console.log(res.data);
+    //console.log(res.data);
 
     dispatch({type: GET_LOGGEDIN_USER, payload: res.data});
 
@@ -83,11 +83,16 @@ export const login = ({email, password}) => async dispatch => {
 
   try {
     
-    const res = await axios.post('api/auth', body, config);
+    const res = await axios.post('/api/auth', body, config);
 
+    //console.log(res.data);
     dispatch({ type: LOGIN_SUCCESS, payload: res.data});
 
+    dispatch(getLoggedinUser());
+
   } catch (err) {
+
+    //console.log(err.response);
     
     const errors = err.response.data.errors;
     
@@ -100,3 +105,10 @@ export const login = ({email, password}) => async dispatch => {
 
 }
 
+
+//Logout User and Clear Contacts
+
+export const logout = () => dispatch => {
+  dispatch({type: CLEAR_CONTACTS});
+  dispatch({ type: LOG_OUT});
+}

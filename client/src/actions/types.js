@@ -9,5 +9,8 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const NO_TOKEN = 'NO_TOKEN';
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const CONTACT_ERROR = 'CONTACT_ERROR';
+export const GET_CONTACTS = 'GET_CONTACTS';
+export const LOG_OUT = 'LOG_OUT';
+export const CLEAR_CONTACTS = 'CLEAR_CONTACTS';
 
 

@@ -1,4 +1,4 @@
-import { ADD_CONTACT } from "../actions/types";
+import { ADD_CONTACT, GET_CONTACTS, CLEAR_CONTACTS, CONTACT_ERROR } from "../actions/types";
 
 const initialState = {
   contacts: [],
@@ -13,6 +13,13 @@ export default function(state = initialState, action ) {
 
   switch(type) {
 
+    case GET_CONTACTS:
+      return {
+        ...state,
+        contacts: payload,
+        loading: false
+      }
+
     case ADD_CONTACT:
       return {
         ...state,
@@ -24,6 +31,14 @@ export default function(state = initialState, action ) {
       return {
         ...state,
         error: payload,
+        loading: false
+      }
+
+    case CLEAR_CONTACTS:
+      return {
+        ...state,
+        contacts: [],
+        contact: null,
         loading: false
       }
 
