@@ -9,7 +9,7 @@ const Navbar = ({auth: {isAuthenticated, loading, user }, logout}) => {
   const guestLinks = (
 
   <ul className="navbar-nav" >
-    <li className="nav-item"><Link className="nav-link"  to="/login">Login</Link></li>
+    <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
     <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
     <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>    
   </ul>
@@ -29,7 +29,7 @@ const Navbar = ({auth: {isAuthenticated, loading, user }, logout}) => {
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-danger">
       <div className="container">
-        <Link className="navbar-brand" href="/" >
+        <Link className="navbar-brand" to="/" >
           <i className="fas fa-id-card-alt"> </i> Contact Keeper v.2 
         </Link>
         {loading ? null : <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>}

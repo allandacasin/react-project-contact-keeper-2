@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {setAlert} from './alert'
-import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS } from './types'
+import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT } from './types'
 
 
-export const addContact = ({name, email, phone, type}) => async dispatch => {
+export const addContact = contact => async dispatch => {
 
   try {
     
@@ -13,9 +13,7 @@ export const addContact = ({name, email, phone, type}) => async dispatch => {
       }
     }
 
-    const body = JSON.stringify({name, email, phone, type});
-
-    const res = await axios.post('api/contacts', body, config);
+    const res = await axios.post('api/contacts', contact, config);
 
     dispatch({type: ADD_CONTACT, payload: res.data});
 
@@ -50,5 +48,48 @@ export const getContacts = () => async dispatch => {
     dispatch({type: CONTACT_ERROR, payload: {msg: err.response.statusText, status: err.response.status}});
 
   }
+
+}
+
+
+export const setCurrent = contact => dispatch => {
+
+  dispatch({type: SET_CURRENT, payload: contact})
+
+}
+
+export const clearCurrent = () => dispatch => {
+  
+  dispatch({type: CLEAR_CURRENT})
+
+}
+
+export const updateContact = contact => async dispatch => {
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  try {
+    const res = await axios.put(`api/contacts/${contact._id}`, contact, config);
+
+    dispatch({type: UPDATE_CONTACT, payload: res.data});
+
+    dispatch((setAlert('Contact Updated', 'success')));
+
+  } catch (err) {
+    
+    const errors = err.response.data.errors;
+    
+
+    if(errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+    
+    dispatch({type: CONTACT_ERROR, payload: {msg: err.response.statusText, status: err.response.status}});
+  }
+
 
 }

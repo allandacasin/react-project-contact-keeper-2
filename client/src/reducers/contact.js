@@ -1,8 +1,8 @@
-import { ADD_CONTACT, GET_CONTACTS, CLEAR_CONTACTS, CONTACT_ERROR } from "../actions/types";
+import { ADD_CONTACT, GET_CONTACTS, CLEAR_CONTACTS, CONTACT_ERROR, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT } from "../actions/types";
 
 const initialState = {
   contacts: [],
-  contact: null,
+  current: null,
   loading: true,
   error: {}
 }
@@ -39,6 +39,27 @@ export default function(state = initialState, action ) {
         ...state,
         contacts: [],
         contact: null,
+        loading: false
+      }
+
+    case UPDATE_CONTACT:
+      return {
+        ...state,
+        contacts: state.contacts.map(contact => contact._id === payload._id ? contact = payload : contact) ,
+        loading: false
+      }
+
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: payload,
+        loading: false
+      }
+
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null,
         loading: false
       }
 
