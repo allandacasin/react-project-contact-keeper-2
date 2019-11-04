@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://allandacasin:wBD5WIW30Nzs2NXz@ck-2-roziv.mongodb.net/test?retryWrites=true&w=majority",
-  "jwtSecret": "xwJaRu3G3V"
+  "mongoURI": "",
+  "jwtSecret": ""
 }
