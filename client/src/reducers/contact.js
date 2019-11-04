@@ -1,8 +1,9 @@
-import { ADD_CONTACT, GET_CONTACTS, CLEAR_CONTACTS, CONTACT_ERROR, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, DELETE_CONTACT } from "../actions/types";
+import { ADD_CONTACT, GET_CONTACTS, CLEAR_CONTACTS, CONTACT_ERROR, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, DELETE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER } from "../actions/types";
 
 const initialState = {
   contacts: [],
   current: null,
+  filter: null,
   loading: true,
   error: {}
 }
@@ -24,6 +25,7 @@ export default function(state = initialState, action ) {
       return {
         ...state,
         contacts: [payload, ...state.contacts],
+        current: null,
         loading: false
       }
 
@@ -39,6 +41,7 @@ export default function(state = initialState, action ) {
         ...state,
         contacts: [],
         contact: null,
+        filter: null,
         loading: false
       }
 
@@ -56,6 +59,29 @@ export default function(state = initialState, action ) {
         loading: false
       }
 
+    case FILTER_CONTACTS:
+      return {
+        ...state,
+        filter: state.contacts.filter(contact => {
+          
+          const regex = new RegExp(`${payload}`, 'gi');
+
+        // g = global, match all instances of the pattern in a string, not just one
+        // i = case-insensitive (so, for example, /a/i will match the string "a" or "A".
+
+          return contact.name.match(regex) || contact.email.match(regex) || contact.phone.match(regex);
+
+        }),
+        loading: false
+      }
+
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filter: null,
+        loading: false
+      }
+
     case DELETE_CONTACT:
       return {
         ...state,
@@ -69,6 +95,7 @@ export default function(state = initialState, action ) {
         current: null,
         loading: false
       }
+
 
     default: 
       return state

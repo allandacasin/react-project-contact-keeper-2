@@ -8,8 +8,11 @@ const ContactForm = ({addContact, clearCurrent, updateContact, current}) => {
   useEffect(() => {
 
     if(current !== null ) {
+
       setContact(current);
-    } else {
+    } 
+    else {
+      
       setContact({
 
         name: '',
@@ -20,14 +23,14 @@ const ContactForm = ({addContact, clearCurrent, updateContact, current}) => {
       })
     }
     
-  }, [current])
+  }, [current]);
 
   const [contact, setContact] = useState({
     name: '',
     email: '',
     phone: '',
     type: '',
-  })
+  });
 
   const {name, email, phone, type} = contact;
 
@@ -36,6 +39,7 @@ const ContactForm = ({addContact, clearCurrent, updateContact, current}) => {
   }
 
   const onSubmit = e => {
+    
     e.preventDefault();
     
     if(current !== null) {
@@ -44,11 +48,21 @@ const ContactForm = ({addContact, clearCurrent, updateContact, current}) => {
 
     } else {
     
-    addContact(contact);
+      addContact(contact);
 
     }
 
     clearCurrent();
+
+    setContact({
+
+      name: '',
+      email: '',
+      phone: '',
+      type: ''
+
+    });
+
   }
 
   return (

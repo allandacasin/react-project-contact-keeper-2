@@ -1,11 +1,30 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useRef} from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {filterContact, clearFilter} from '../../actions/contact'
 
-const ContactFilter = props => {
+const ContactFilter = ({filterContact, clearFilter}) => {
+
+  const text = useRef('');
+
+  const onChange = e => {
+
+    if(text.current.value !== '') {
+      
+      filterContact(e.target.value)
+
+    } else {
+      
+      clearFilter();
+
+    }
+
+  }
+
   return (
     <Fragment>
       <form>
-        <input type="text" placeholder="Filter Contacts..."/>
+        <input ref={text} type="text" placeholder="Filter Contacts..." onChange={onChange}/>
       </form>
     </Fragment>
   )
@@ -13,6 +32,9 @@ const ContactFilter = props => {
 
 ContactFilter.propTypes = {
 
+  filterContact: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired,
+
 }
 
-export default ContactFilter
+export default connect(null, {filterContact, clearFilter})(ContactFilter)

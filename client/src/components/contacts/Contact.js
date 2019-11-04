@@ -7,7 +7,7 @@ import ContactForm from './ContactForm'
 import {getContacts} from '../../actions/contact'
 import Spinner from '../layout/Spinner'
 
-const Contact = ({contact: {contacts, loading}, getContacts}) => {
+const Contact = ({contact: {contacts, loading, filter}, getContacts}) => {
 
   useEffect(() => {
     getContacts();
@@ -28,11 +28,19 @@ const Contact = ({contact: {contacts, loading}, getContacts}) => {
           {/* ContactItem Component */}
           <Fragment>
             {loading ? (<Spinner />) : (
-              <Fragment>
-                {contacts.map(contact => (
-                  <ContactItem key={contact._id} contact={contact} />
-                ))}
-              </Fragment>
+              filter ? 
+                (<Fragment>
+                  {filter.map(contact => (
+                    <ContactItem key={contact._id} contact={contact} />
+                  ))}
+                </Fragment>) :
+                (
+                <Fragment>
+                  {contacts.map(contact => (
+                    <ContactItem key={contact._id} contact={contact} />
+                  ))}
+                </Fragment>
+                )
             )}
           </Fragment>
         </div>

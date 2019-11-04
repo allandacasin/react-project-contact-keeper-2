@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {setAlert} from './alert'
-import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, DELETE_CONTACT } from './types'
+import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, DELETE_CONTACT, FILTER_CONTACTS, CLEAR_FILTER } from './types'
 
 
 export const addContact = contact => async dispatch => {
@@ -18,6 +18,7 @@ export const addContact = contact => async dispatch => {
     dispatch({type: ADD_CONTACT, payload: res.data});
 
     dispatch((setAlert('Contact Added', 'success')));
+
 
   } catch (err) {
 
@@ -114,5 +115,16 @@ export const deleteContact = _id => async dispatch => {
 
   }
 
+}
+
+export const filterContact = text => dispatch => {
+  
+  dispatch({type: FILTER_CONTACTS, payload: text});
+
+}
+
+export const clearFilter = () => dispatch => {
+
+  dispatch({type: CLEAR_FILTER})
 
 }
