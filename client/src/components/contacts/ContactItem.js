@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {setCurrent, clearCurrent} from '../../actions/contact'
+import {setCurrent, deleteContact} from '../../actions/contact'
 
 const ContactItem = ({contact,
-  setCurrent,
-  clearCurrent
-}) => {
+    setCurrent,
+    deleteContact
+  }) => {
 
   const {_id, name, email, phone, type} = contact;
 
@@ -25,7 +25,7 @@ const ContactItem = ({contact,
             </li>
             <p>
               <button className="btn btn-dark btn-sm" onClick={() => setCurrent(contact)}>Edit</button> 
-              <button className="btn btn-danger btn-sm">Delete</button>
+              <button className="btn btn-danger btn-sm" onClick={() => deleteContact(_id)}>Delete</button>
             </p>
         </ul>
       </div>
@@ -36,7 +36,8 @@ const ContactItem = ({contact,
 ContactItem.propTypes = {
   
   contact: PropTypes.object.isRequired,
+  deleteContact: PropTypes.func.isRequired,
 
 }
 
-export default connect(null, {setCurrent, clearCurrent})(ContactItem)
+export default connect(null, {setCurrent, deleteContact})(ContactItem)

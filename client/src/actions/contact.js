@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {setAlert} from './alert'
-import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT } from './types'
+import { ADD_CONTACT, CONTACT_ERROR, GET_CONTACTS, SET_CURRENT, CLEAR_CURRENT, UPDATE_CONTACT, DELETE_CONTACT } from './types'
 
 
 export const addContact = contact => async dispatch => {
@@ -89,6 +89,29 @@ export const updateContact = contact => async dispatch => {
     }
     
     dispatch({type: CONTACT_ERROR, payload: {msg: err.response.statusText, status: err.response.status}});
+  }
+
+
+}
+
+
+export const deleteContact = _id => async dispatch => {
+
+  if(window.confirm('Are you sure to delete? This cannot be undone.!')) {
+
+    try {
+      
+      await axios.delete(`/api/contacts/${_id}`);
+
+      dispatch({type: DELETE_CONTACT, payload: _id});
+
+      dispatch((setAlert('Contact Deleted', 'success')));
+
+    } catch (err) {
+      
+      dispatch({type: CONTACT_ERROR, payload: {msg: err.response.statusText, status: err.response.status}});
+    }
+
   }
 
 
