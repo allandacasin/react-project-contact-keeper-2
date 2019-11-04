@@ -12,6 +12,7 @@ import setAuthToken from './utils/setAuthToken';
 import { getLoggedinUser, noToken } from './actions/auth';
 import Contact from './components/contacts/Contact';
 import PrivateRoute from './components/routing/PrivateRoute';
+import About from './components/pages/About';
 
 if(localStorage.token) {
   setAuthToken(localStorage.token)
@@ -40,6 +41,7 @@ const App = () => {
               <Switch>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/about' component={About} />
                 <PrivateRoute exact path='/' component={Contact} />
               </Switch>
             </section>
